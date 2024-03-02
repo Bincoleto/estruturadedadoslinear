@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int vetor[3];
+//int i;
+int numero;
+int numero_digita;
+
+void inserir(){
+    for (int i == 0; i <= 2; i++){
+        printf("Digite o numero que vc quer inserir no vetor: ");
+        scanf("%d",&numero);
+        vetor[i] = numero;
+        printf("%d",vetor[i]);
+        
+    }
+    
+}
+
+void remover(){
+    
+}
+
+void exibir(){
+    
+}
+
+int main(){
+    
+    int op;
+    
+    printf("---Programa de pilha em C---");
+    printf("\nDigite 1 para inserir ");
+    printf("\nDigite 2 para remover ");
+    printf("\nDigite 3 para exibir ");
+    printf("\nSe você deseja sair, aperte 4 ");
+    printf("\ndigite a opção que vc quer executar: ");
+    scanf("%d", &op); // leitura da entrada via teclado
+    
+    switch(op){
+        case 1: printf("função inserir "); inserir();  break;
+        case 2: printf("função remover "); remover(); break;
+        case 3: printf("função exibir "); exibir(); break;
+        case 4: printf("sair"); break;
+    }
+
+}
