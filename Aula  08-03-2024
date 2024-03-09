@@ -17,8 +17,8 @@ void exibir(void){
         }
         printf("\n");
         system("PAUSE");
+        
 }
-
 
 void inserir(void){
     if (topo == max){
@@ -30,6 +30,12 @@ void inserir(void){
         topo++;
     }
     exibir();
+}
+
+void top(void){
+    printf("\n o valor do topo na pilha é %d\n", dado[topo-1]);
+    //topo--;
+    
 }
 
 void remover(void){
@@ -51,7 +57,8 @@ int menu(){
     printf("\nDigite 1 para inserir ");
     printf("\nDigite 2 para remover ");
     printf("\nDigite 3 para exibir ");
-    printf("\nSe você deseja sair, aperte 4 ");
+    printf("\nDigite 4 para ver o topo ");
+    printf("\nSe você deseja sair, aperte 5 ");
     //printf("\ndigite a opção que vc quer executar: ");
     scanf("%d", &op); // leitura da entrada via teclado
     
@@ -62,18 +69,18 @@ int menu(){
             break;
         case 3: exibir();
             break;
-        case 4: break;
+        case 4: top();
+            break;
+        case 5: break;    
     }
     return 0;
 }
 
-
 int main(){
     
-    while ( op != 4){
+    while ( op != 5){
         system("cls");
         menu();
     }
     return 0;
-
 }
