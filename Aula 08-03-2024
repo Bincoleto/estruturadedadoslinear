@@ -1,0 +1,104 @@
+# Aula Fila
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+# define max 5
+
+int dado[max];
+int inicio = 0;
+int fim = 0;
+int op;
+
+void exibirFim(void) {
+	if(fim == 0) {
+		printf("\nA fila esta vazia\n");
+	} else {
+		printf("fim = %d", dado[fim]);
+	}
+	printf("\n");
+	system("PAUSE");
+}
+
+void exibirInicio(void) {
+	if(fim == 0) {
+		printf("\nA fila esta vazia\n");
+	} else {
+		printf("Início = %d", dado[inicio]);
+	}
+	printf("\n");
+	system("PAUSE");
+}
+
+void exibir(void) {
+	printf("\n");
+	for(int temp = inicio; temp < fim; temp++) {
+		printf("Na posicao %d temos %d\n", temp, dado[temp]);
+	}
+	printf("\n");
+	system("PAUSE");
+}
+
+void inserir(void) {
+	if(fim == max) {
+		printf("A fila está cheia;\n");	
+	} else {
+		printf("Digite o valor para entrar na fila: \n");
+		scanf("%d", &dado[fim]);
+		fim++;
+	}
+	exibir();
+}
+
+void remover(void) {
+	if(fim == 0) {
+		printf("\nA fila esta vazia\n");
+	} else {
+		printf("\nRetirado o valor %d da fila\n", dado[inicio]);
+		fim = fim - 1;
+		for(int i = 0; i < fim; i++) {
+			dado[i] = dado[(i + 1)];
+		}
+	}
+	exibir();
+}
+
+int menu() {
+	printf("-= Programa Fila em C =-\n\n");
+	printf("   Para inserir digite       1\n");
+	printf("   Para remover digite       2\n");
+	printf("   Para exibir digite        3\n");
+	printf("   Para exibir o ini. tecle  4\n");
+	printf("   Para exibir o fim         5\n");
+	printf("   Para sair                 6\n");
+	scanf("%d", &op);
+	switch(op) {
+		case 1:
+			inserir();
+			break;
+		case 2:
+			remover();
+			break;
+		case 3:
+			exibir();
+			break;
+		case 4:
+			exibirInicio();
+			break;
+		case 5:
+			exibirFim();
+			break;
+		default:
+			printf("Opcao invalida\n");
+			system("PAUSE");
+	}
+	return 0;
+}
+
+int main() {
+	while(op != 5) {
+		system("cls");
+		menu();
+	}
+	return 0;
+}
