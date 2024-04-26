@@ -55,3 +55,114 @@ int main()
 
     return 0;
 }
+
+
+-------------------------------------------------
+//Atividade:
+//#include <conio.h> pode ser usado em algusn compiladores apenas.
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definindo a estrutura do nó da pilha
+struct no {
+    int valor;
+    struct no *anterior;
+};
+
+// Definindo o ponteiro para o topo da pilha
+struct no *topo = NULL;
+
+// Função para verificar se a pilha está vazia
+void pilhavazia() {
+    if (topo == NULL)
+        printf("A pilha está vazia\n");
+    else
+        printf("A pilha não está vazia\n");
+}
+
+// Função para empilhar um elemento na pilha
+void empilha(int pvalor) {
+    struct no *novo = (struct no*)malloc(sizeof(struct no));
+    if (novo == NULL) {
+        printf("Erro: não foi possível alocar memória\n");
+        return;
+    }
+    novo->valor = pvalor; 
+    novo->anterior = topo;
+    topo = novo;
+    
+    printf("Elemento %d inserido com sucesso\n", novo->valor);
+}
+
+// Função para mostrar todos os elementos da pilha
+void mostrar() {
+    struct no *aux = topo;
+    printf("Elementos da pilha:\n");
+    while (aux != NULL) {
+        printf("%d\n", aux->valor);
+        aux = aux->anterior;
+    }
+}
+
+// Função para remover todos os elementos da pilha
+void excluir() {
+    struct no *aux = topo;
+    while (aux != NULL) {
+        topo = aux->anterior;
+        free(aux);
+        aux = topo;
+    }
+    printf("Pilha excluída com sucesso\n");
+    topo = NULL; // Garantindo que o topo aponte para NULL após a exclusão
+}
+
+// Função para ver o topo da pilha
+void top() {
+    if (topo == NULL)
+        printf("A pilha está vazia\n");
+    else
+        printf("Topo da pilha: %d\n", topo->valor);
+}
+
+// Função para exibir o menu e processar as opções
+void menu() {
+    int op;
+    printf("\n--- Programa de pilha Dinâmica em C ---\n");
+    printf("Digite 1 para inserir\n");
+    printf("Digite 2 para mostrar\n");
+    printf("Digite 3 para excluir\n");
+    printf("Digite 4 para ver o topo\n");
+    printf("Digite 5 para sair\n");
+    printf("Digite a opção desejada: ");
+    scanf("%d", &op);
+    
+    switch(op) {
+        case 1:
+            printf("Digite o valor a ser inserido: ");
+            int valor;
+            scanf("%d", &valor);
+            empilha(valor);
+            break;
+        case 2:
+            mostrar();
+            break;
+        case 3:
+            excluir();
+            break;
+        case 4:
+            top();
+            break;
+        case 5:
+            printf("Encerrando o programa...\n");
+            exit(0);
+        default:
+            printf("Opção inválida! Por favor, escolha uma opção válida.\n");
+    }
+}
+
+int main() {
+    while (1) {
+        menu();
+    }
+    return 0;
+}
