@@ -1,0 +1,113 @@
+//Codigo Fila Dinamica. 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct no {
+    int valor;
+    struct no *proximo;
+};
+
+struct no *inicio = NULL;
+struct no *fim = NULL;
+
+void filaVazia() {
+    inicio = NULL;
+    fim = NULL;
+}
+
+void insereFim(int pvalor) {
+    struct no *novo;
+    novo = (struct no *)malloc(sizeof(struct no));
+    novo->valor = pvalor;
+    novo->proximo = NULL;
+    if (inicio == NULL) {
+        inicio = novo;
+    } else {
+        fim->proximo = novo;
+    }
+    fim = novo;
+    printf("Elemento %d inserido com sucesso.\n", pvalor);
+}
+
+void mostra() {
+    struct no *atual = inicio;
+    if (inicio == NULL) {
+        printf("A fila está vazia!\n");
+    } else {
+        printf("Fila: ");
+        while (atual != NULL) {
+            printf("%d ", atual->valor);
+            atual = atual->proximo;
+        }
+        printf("\n");
+    }
+}
+
+void removeInicio() {
+    if (inicio == NULL) {
+        printf("A fila está vazia!\n");
+    } else {
+        struct no *temp = inicio;
+        inicio = inicio->proximo;
+        printf("Removido o valor %d da fila.\n", temp->valor);
+        free(temp);
+        if (inicio == NULL) {
+            fim = NULL;
+        }
+    }
+}
+
+void excluirTudo() {
+    struct no *aux = inicio;
+    while (inicio != NULL) {
+        inicio = inicio->proximo;
+        free(aux);
+        aux = inicio;
+    }
+    fim = NULL;
+    printf("Fila excluída com sucesso.\n");
+}
+
+int main() {
+    int valor, op;
+    filaVazia();
+    do {
+        printf("Escolha uma opção:\n");
+        printf("0 - Sair\n");
+        printf("1 - Inserir\n");
+        printf("2 - Mostrar fila\n");
+        printf("3 - Exibir valor do início\n");
+        printf("4 - Remover início da fila\n");
+        printf("5 - Excluir toda a fila\n");
+        scanf("%d", &op);
+
+        switch (op) {
+            case 1:
+                printf("Digite o valor que deseja inserir: ");
+                scanf("%d", &valor);
+                insereFim(valor);
+                break;
+            case 2:
+                mostra();
+                break;
+            case 3:
+                if (inicio != NULL) {
+                    printf("Valor do início: %d\n", inicio->valor);
+                } else {
+                    printf("A fila está vazia!\n");
+                }
+                break;
+            case 4:
+                removeInicio();
+                break;
+            case 5:
+                excluirTudo();
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while (op != 0);
+
+    return 0;
+}
