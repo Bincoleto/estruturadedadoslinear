@@ -1,1 +1,119 @@
+//Codigo de lista dinamica simples encadeada
 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+void insert(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+    printf("Valor %d inserido com sucesso.\n", value);
+}
+
+void display() {
+    if (head == NULL) {
+        printf("A lista está vazia!\n");
+    } else {
+        struct Node* current = head;
+        printf("Lista: ");
+        while (current != NULL) {
+            printf("%d ", current->data);
+            current = current->next;
+        }
+        printf("\n");
+    }
+}
+
+void removeNode(int value) {
+    struct Node *current = head, *prev = NULL;
+
+    while (current != NULL && current->data != value) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (current == NULL) {
+        printf("Valor %d não encontrado na lista.\n", value);
+        return;
+    }
+
+    if (prev == NULL) {
+        head = current->next;
+    } else {
+        prev->next = current->next;
+    }
+
+    printf("Valor %d removido da lista.\n", value);
+    free(current);
+}
+
+void getLastInserted() {
+    if (head == NULL) {
+        printf("Lista vazia.\n");
+        return;
+    }
+
+    printf("Último valor inserido: %d\n", head->data);
+}
+
+void removeAll() {
+    struct Node* current = head;
+    while (current != NULL) {
+        struct Node* temp = current;
+        current = current->next;
+        free(temp);
+    }
+    head = NULL;
+    printf("Lista excluída com sucesso.\n");
+}
+
+int main() {
+    int value, choice;
+    do {
+        printf("Escolha uma opção:\n");
+        printf("0 - Sair\n");
+        printf("1 - Inserir valor\n");
+        printf("2 - Mostrar lista\n");
+        printf("3 - Mostrar último valor inserido\n");
+        printf("4 - Remover valor da lista\n");
+        printf("5 - Remover todos os valores da lista\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 0:
+                printf("Encerrando o programa.\n");
+                break;
+            case 1:
+                printf("Digite o valor que deseja inserir: ");
+                scanf("%d", &value);
+                insert(value);
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                getLastInserted();
+                break;
+            case 4:
+                printf("Digite o valor que deseja remover: ");
+                scanf("%d", &value);
+                removeNode(value);
+                break;
+            case 5:
+                removeAll();
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while (choice != 0);
+
+    return 0;
+}
