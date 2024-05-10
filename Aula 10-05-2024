@@ -117,3 +117,142 @@ int main() {
 
     return 0;
 }
+
+
+-------------------------------------------------------------------------------------
+//Codigo de lista dinamica encadeada circular
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+void insert(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+    if (head == NULL) {
+        head = newNode;
+        newNode->next = head;  // Faz o novo nó apontar para ele mesmo, tornando a lista circular
+    } else {
+        struct Node* temp = head;
+        while (temp->next != head) {
+            temp = temp->next;
+        }
+        temp->next = newNode;  // Faz o último nó apontar para o novo nó
+        newNode->next = head;  // Faz o novo nó apontar para o primeiro nó
+    }
+    printf("Valor %d inserido com sucesso.\n", value);
+}
+
+void display() {
+    if (head == NULL) {
+        printf("A lista está vazia!\n");
+    } else {
+        struct Node* current = head;
+        printf("Lista: ");
+        do {
+            printf("%d ", current->data);
+            current = current->next;
+        } while (current != head);
+        printf("\n");
+    }
+}
+
+void removeNode(int value) {
+    if (head == NULL) {
+        printf("A lista está vazia!\n");
+        return;
+    }
+
+    struct Node *current = head, *prev = NULL;
+
+    do {
+        prev = current;
+        current = current->next;
+    } while (current != head && current->data != value);
+
+    if (current == head && current->data != value) {
+        printf("Valor %d não encontrado na lista.\n", value);
+        return;
+    }
+
+    if (prev == NULL) {
+        prev = head;
+        while (prev->next != head) {
+            prev = prev->next;
+        }
+        prev->next = head->next;
+        head = head->next;
+    } else {
+        prev->next = current->next;
+    }
+
+    free(current);
+    printf("Valor %d removido da lista.\n", value);
+}
+
+void removeAll() {
+    if (head == NULL) {
+        printf("A lista está vazia!\n");
+        return;
+    }
+
+    struct Node *current = head, *nextNode;
+
+    do {
+        nextNode = current->next;
+        free(current);
+        current = nextNode;
+    } while (current != head);
+
+    head = NULL;
+    printf("Lista excluída com sucesso.\n");
+}
+
+int main() {
+    int value, choice;
+    do {
+        printf("Escolha uma opção:\n");
+        printf("0 - Sair\n");
+        printf("1 - Inserir valor\n");
+        printf("2 - Mostrar lista\n");
+        printf("3 - Remover valor da lista\n");
+        printf("4 - Remover todos os valores da lista\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 0:
+                printf("Encerrando o programa.\n");
+                break;
+            case 1:
+                printf("Digite o valor que deseja inserir: ");
+                scanf("%d", &value);
+                insert(value);
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                printf("Digite o valor que deseja remover: ");
+                scanf("%d", &value);
+                removeNode(value);
+                break;
+            case 4:
+                removeAll();
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while (choice != 0);
+
+    return 0;
+}
+
+
+
